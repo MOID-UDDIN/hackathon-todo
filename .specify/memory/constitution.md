@@ -1,55 +1,83 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+Version change: None -> 1.0.0
+Modified principles: All (initial creation)
+Added sections: Development Guidelines, Project Phases & Deliverables
+Removed sections: None
+Templates requiring updates:
+- .specify/templates/plan-template.md ⚠ pending
+- .specify/templates/spec-template.md ⚠ pending
+- .specify/templates/tasks-template.md ⚠ pending
+- .specify/templates/commands/*.md ⚠ pending
+Follow-up TODOs: None
+-->
+# Hackathon Todo (Full-Stack + AI Chatbot) Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-Driven Development (NON-NEGOTIABLE)
+All changes MUST be driven via specs (Constitution → Feature Spec → Plan → Tasks → Implementation prompts). Specs are the source of truth. Implementation MUST map back to requirements.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Keep It Simple & Shippable
+Prefer smallest working solution that is reliable. Avoid adding unused abstractions, unused folders, or “future-proof” complexity that isn’t used in this project.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Monorepo Reality (This Project)
+This repo is a monorepo:
+- `frontend/` contains Next.js app (login page is the landing `/`)
+- `backend/` contains FastAPI app (JWT auth + todos + chatbot routes)
+No “extra auth folder” is created—auth lives under backend routes and frontend pages.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Security Baselines
+- JWT tokens must be signed with a secret (env var).
+- Passwords must be hashed (bcrypt).
+- Token decode must verify algorithm.
+- Never log secrets.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Data Integrity
+- Todos belong to a user (multi-user).
+- CRUD operations must enforce ownership.
+- Chat history is user-scoped.
 
-### [PRINCIPLE_6_NAME]
+### VI. UX Rules (Project-Specific)
+- Login is the home page (`/`).
+- Dashboard supports:
+  - create todo with optional description
+  - edit title + description
+  - delete one
+  - bulk delete selected
+  - delete all (confirmation)
+  - complete/incomplete toggle button
+- Chatbot supports:
+  - show todos
+  - add todo (with description if provided)
+  - update todo title/description
+  - complete/incomplete
+  - delete todo
+  - chat history view
+  - delete chat history (button + confirmation)
 
+## Development Guidelines
 
-[PRINCIPLE__DESCRIPTION]
+### Folder Structure (Specs + Prompt History)
+This repo uses:
+- `.specify/memory/constitution.md` as the main memory constitution
+- `history/prompts/...` as Prompt History Records (PHR)
+- `specs/...` as feature specs + plans + tasks + checklists
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### Workflow
+1) Write/Update spec
+2) Write plan
+3) Write tasks
+4) Write implementation prompt
+5) Implement in code
+6) Verify behavior
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Project Phases & Deliverables (Your Current Status)
+- Phase 1/2: Full-stack todo app (auth + todos)
+- Phase 3: Todo AI chatbot (natural language)
+You’ve implemented Phase 1–3; future phases are out of scope unless explicitly requested.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This Constitution overrides all other docs. Changes must update specs and keep repo consistent.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-28 | **Last Amended**: 2025-12-28
